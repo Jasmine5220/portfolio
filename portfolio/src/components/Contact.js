@@ -37,7 +37,7 @@ const Contact = () => {
                     </p>
                 </div>
                 <div className="contact-image" data-aos="fade-left">
-                    <img src='./side.gif' alt="Contact" />
+                    <img src='./prospect1.png' alt="Contact" />
                 </div>
             </div>
         </div>

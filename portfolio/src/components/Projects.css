@@ -1,6 +1,7 @@
 body {
     margin: 0;
-    background-color: #f4f4f4;
+    background-color: #000;
+    color: #fff;
 }
 
 .projects-section {
@@ -10,7 +11,7 @@ body {
     flex-direction: column;
     align-items: center;
     padding: 2rem;
-    background-color: #f4f4f4;
+    background-color: #000;
     height: 100vh;
     overflow: hidden;
 }
@@ -29,7 +30,7 @@ body {
 .top-section p {
     font-size: 1.15rem; /* Increased font size */
     margin: 1rem 0;
-    color: #333;
+    color: #fff;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -43,9 +44,9 @@ body {
 }
 
 .project-card {
-    background-color: white;
+    background-color: #111;
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 8px rgba(255, 255, 255, 0.05);
     padding: 1.5rem;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     animation: fadeIn 0.5s ease-out;
@@ -53,7 +54,7 @@ body {
 
 .project-card:hover {
     transform: scale(1.02);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 8px 16px rgba(255, 255, 255, 0.1);
 }
 
 @keyframes fadeIn {
@@ -76,23 +77,23 @@ body {
 .project-header h3 {
     font-size: 1.25rem; /* Increased font size */
     margin-bottom: 0.5rem;
-    color: #530c86;
+    color: #fff;
 }
 
 .project-header a {
-    color: #333;
+    color: #fff;
     font-size: 1.75rem; /* Increased size */
     transition: color 0.3s ease;
 }
 
 .project-header a:hover {
-    color: #530c86;
+    color: #ddd;
 }
 
 .project-card p {
     font-size: 1rem; /* Increased font size */
     line-height: 1.25;
-    color: #555;
+    color: #ddd;
 }
 
 /* Responsive adjustments */

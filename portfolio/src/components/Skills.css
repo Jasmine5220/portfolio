@@ -2,15 +2,17 @@
 .skills-container {
   display: flex;
   flex-direction: column;
-  align-items: center; /* Center align the content */
-  padding: 2rem;
+  align-items: center;
+  padding: 2rem 1rem;
 }
 
-.skills-category {
-  width: 100%; /* Ensure categories take full width */
-  margin-bottom: 0rem;
-  text-align: left; /* Center align the text */
+.skills-heading {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  color: #fff;
 }
+
+.skills-category { display: none; }
 
 .category-title {
   display: flex;
@@ -23,33 +25,75 @@
   margin-right: 0.5rem; /* Space between icon and text */
 }
 
-.title {
-  font-size: 1.5rem;
-  color: #333;
+.title { display: none; }
+
+.skills-row { display: none; }
+
+.skill-item { display: none; }
+
+.proficient, .intermediate, .beginner { display: none; }
+
+/* Code editor styling (wider, dark) */
+.code-editor {
+  background: #0a0a0a;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+  margin: 1rem auto;
+  width: 100%;
+  max-width: 900px;
 }
 
-.skills-row {
+.code-editor__header {
+  background: #141414;
+  padding: 12px 16px;
   display: flex;
-  justify-content: center; /* Center align skill items */
-  flex-wrap: wrap; /* Wrap items to the next line if needed */
-  gap: 0.5rem;
-  margin-bottom:0.3rem;
+  align-items: center;
+  gap: 8px;
+  border-bottom: 1px solid #222;
 }
 
-.skill-item {
-  padding: 0.5rem 1rem;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+/* Position: filename on left, dots on right */
+.code-editor__title { order: 0; margin-right: auto; }
+.code-editor__dot { order: 1; }
+.code-editor__header .code-editor__dot:first-child { margin-left: 0; }
+
+.code-editor__dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+.code-editor__dot--red { background: #ff5f56; }
+.code-editor__dot--yellow { background: #ffbd2e; }
+.code-editor__dot--green { background: #27c93f; }
+
+.code-editor__title {
+  color: #b0b0b0;
+  font-size: 0.85rem;
+  font-family: 'Courier New', monospace;
+  margin-left: 8px;
 }
 
-.proficient {
-  background-color: #e0ffe0;
+.code-editor__content {
+  padding: 1.75rem 1.5rem;
+  overflow-x: auto;
 }
 
-.intermediate {
-  background-color: #ffffe0;
+.code-editor__code {
+  font-family: 'Courier New', monospace;
+  font-size: 0.82rem;
+  line-height: 1.65;
+  color: #d4d4d4;
+  margin: 0;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  text-align: left;
 }
 
-.beginner {
-  background-color: #ffe0e0;
-}
+/* Token colors */
+.code-editor__code .kw { color: #c586c0; }
+.code-editor__code .type { color: #4ec9b0; }
+.code-editor__code .str { color: #ce9178; }
+.code-editor__code .method { color: #dcdcaa; }
+.code-editor__code .id { color: #9cdcfe; }
+.code-editor__code .num { color: #b5cea8; }

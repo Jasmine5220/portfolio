@@ -13,7 +13,7 @@
     padding: 2rem;
     text-align: center;
     height: 100vh;
-    background-color: #f3e5f5;
+    background-color: #000;
 }
 
 .section-title {
@@ -33,9 +33,9 @@
 }
 
 .experience-item {
-    background-color: white;
+    background-color: #111;
     border-radius: 15px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 8px rgba(255, 255, 255, 0.05);
     display: flex;
     align-items: center;
     padding: 1rem;
@@ -48,7 +48,7 @@
 
 .experience-item:hover {
     transform: translateY(-5px);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 8px 16px rgba(255, 255, 255, 0.1);
 }
 
 .experience-logo {
@@ -60,13 +60,13 @@
 .experience-details h3 {
     margin: 0;
     font-size: 1.5rem;
-    color: #530c86;
+    color: #fff;
 }
 
 .experience-details p {
     margin: 0.25rem 0;
     font-size: 1.125rem;
-    color: #333;
+    color: #ddd;
 }
 
 @media (max-width: 768px) {

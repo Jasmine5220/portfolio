@@ -3,23 +3,23 @@
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-color: #f3e5f5;
+  background-color: #000;
 }
 
 .contact-content {
   display: flex;
   flex-direction: row; /* Set to row for side-by-side layout */
   align-items: center;
-  background-color: #ffffff; /* White background */
+  background-color: #111; /* Card background */
   padding: 2rem;
   border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 8px rgba(255, 255, 255, 0.05);
   width: 80%; /* Increase the width of the card */
 }
 
 .contact-title {
   font-size: 2.5rem;
-  color: #333333;
+  color: #fff;
   margin-bottom: 1rem;
   text-align: center;
 }
@@ -29,7 +29,7 @@
   flex-direction: column;
   align-items: center;
   width: 50%; /* Adjust the width */
-  color: #333333;
+  color: #fff;
 }
 
 .contact-links p {
