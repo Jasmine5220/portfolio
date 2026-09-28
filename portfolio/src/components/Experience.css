@@ -9,68 +9,667 @@
     }
 }
 
+@keyframes floatUp {
+    0% { transform: translateY(0); opacity: 0; }
+    10% { opacity: 0.55; }
+    90% { opacity: 0.35; }
+    100% { transform: translateY(-120vh); opacity: 0; }
+}
+
+@keyframes sparklePulse {
+    0%, 100% { opacity: 0.3; transform: scale(0.9) rotate(0deg); }
+    50% { opacity: 0.9; transform: scale(1.15) rotate(20deg); }
+}
+
+.experience-particles {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.particle {
+    position: absolute;
+    bottom: -10px;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--purple);
+    opacity: 0.4;
+    animation-name: floatUp;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+}
+
+.sparkle {
+    position: absolute;
+    color: var(--purple);
+    opacity: 0.5;
+    animation: sparklePulse 4s ease-in-out infinite;
+}
+
 .experience-section {
+    position: relative;
+    overflow: hidden;
     padding: 2rem;
+    box-sizing: border-box;
     text-align: center;
-    height: 100vh;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     background-color: #f3e5f5;
 }
 
-.section-title {
-    font-size: 2rem;
-    margin-bottom: 0rem;
-    margin-top: 3rem;
-    display: inline-block;
+.experience-section .section-heading,
+.experience-section .experience-slide-nav,
+.experience-section .experience-slides {
+    position: relative;
+    z-index: 1;
+}
+
+@keyframes experienceGridDrift {
+    from { background-position: 0 0, 0 0, 0 0; }
+    to { background-position: 48px 48px, 48px 48px, 0 0; }
+}
+
+@keyframes experienceGridPulse {
+    0%, 100% { opacity: 0.7; }
+    50% { opacity: 1; }
+}
+
+.experience-grid {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background-image:
+        linear-gradient(rgba(83, 12, 134, 0.12) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(83, 12, 134, 0.12) 1px, transparent 1px);
+    background-size: 48px 48px, 48px 48px;
+    animation: experienceGridDrift 18s linear infinite, experienceGridPulse 5s ease-in-out infinite;
+    -webkit-mask-image: radial-gradient(circle at 50% 40%, rgba(0, 0, 0, 0.9), transparent 75%);
+    mask-image: radial-gradient(circle at 50% 40%, rgba(0, 0, 0, 0.9), transparent 75%);
+}
+
+.section-heading {
+    margin-top: calc(var(--navbar-height, 74px) + 1rem);
     animation: fadeInUp 1s ease-in-out;
 }
 
-.experience-content {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 1rem;
-    margin-top: 2rem;
+.section-title {
+    font-family: var(--mono);
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: var(--ink);
+    margin: 0 0 0.75rem;
+    display: inline-block;
+    text-transform: none;
 }
 
-.experience-item {
-    background-color: white;
-    border-radius: 15px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+.section-rule {
+    width: 180px;
+    height: 1px;
+    background: rgba(83, 12, 134, 0.3);
+    margin: 0 auto;
+}
+
+/* Timeline slider — both cards sit side by side and are visible at once;
+   the row only becomes a swipeable/scrollable strip if the viewport is
+   too narrow to show them together (scroll-snap makes that feel like a
+   deliberate slider rather than a plain overflow). */
+.timeline-slider {
+    position: relative;
+    max-width: 980px;
+    width: 100%;
+    margin: 3rem auto 1rem;
+    padding: 0 1.5rem;
+    box-sizing: border-box;
+}
+
+/* Both the rail and the card row share the same grid track sizing, so
+   each rail node lands exactly above the horizontal center of its card,
+   and every card stretches to the same width and height as its sibling. */
+.timeline-track,
+.timeline-rail {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+}
+
+.timeline-track {
+    align-items: stretch;
+}
+
+.timeline-slide-item {
+    box-sizing: border-box;
+    min-width: 0;
+}
+
+@keyframes timelineRailPulse {
+    0% { transform: scale(1); opacity: 0.55; }
+    100% { transform: scale(1.9); opacity: 0; }
+}
+
+/* Horizontal timeline rail: a little "roadmap" strip above the cards —
+   a gradient road with a briefcase badge per role (a pulsing ring marks
+   the current one), clickable to scroll that card into view. */
+.timeline-rail {
+    position: relative;
+    align-items: start;
+    margin-bottom: 2.5rem;
+    padding: 0 1rem;
+}
+
+.timeline-rail__line {
+    position: absolute;
+    top: 19px;
+    left: calc(25% - 1rem);
+    right: calc(25% - 1rem);
+    height: 3px;
+    border-radius: 4px;
+    background: linear-gradient(90deg, rgba(83, 12, 134, 0.15), rgba(83, 12, 134, 0.5), rgba(83, 12, 134, 0.15));
+}
+
+.timeline-rail__node {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.65rem;
+}
+
+.timeline-rail__dot {
+    position: relative;
     display: flex;
     align-items: center;
-    padding: 1rem;
-    width: 45%;
-    min-height: 150px;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: #fff;
+    border: 2px solid rgba(83, 12, 134, 0.35);
+    color: var(--purple);
+    font-size: 0.9rem;
+    box-shadow: 0 6px 16px rgba(83, 12, 134, 0.15);
+    transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+.timeline-rail__pulse {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    border: 2px solid var(--purple);
+    animation: timelineRailPulse 2s ease-out infinite;
+}
+
+.timeline-rail__label {
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--ink);
+    white-space: nowrap;
+}
+
+.timeline-card {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
     text-align: left;
-    animation: fadeInUp 1s ease-in-out;
+    background: rgba(255, 255, 255, 0.82);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    border-radius: 4px;
+    box-shadow: 0 10px 34px rgba(83, 12, 134, 0.14);
+    padding: 1.5rem 1.75rem;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.experience-item:hover {
+.timeline-card:hover {
+    z-index: 2;
+}
+
+.timeline-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 16px 40px rgba(83, 12, 134, 0.2);
 }
 
-.experience-logo {
-    width: 50px;
-    height: 50px;
-    margin-right: 1rem;
+.timeline-card__head {
+    display: flex;
+    align-items: stretch;
+    gap: 0.85rem;
+    margin-bottom: 0.25rem;
 }
 
-.experience-details h3 {
-    margin: 0;
-    font-size: 1.5rem;
+.timeline-logo {
+    flex-shrink: 0;
+    width: 64px;
+    height: auto;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(160deg, rgba(83, 12, 134, 0.12), rgba(83, 12, 134, 0.04));
+    border: 1px solid rgba(83, 12, 134, 0.15);
+    color: #530c86;
+    font-size: 1.2rem;
+    font-weight: 700;
+    font-family: var(--mono);
+    overflow: hidden;
+}
+
+.timeline-logo img {
+    width: 34px;
+    height: 34px;
+    object-fit: contain;
+}
+
+.timeline-duration {
+    display: inline-block;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    color: #530c86;
+    background: rgba(83, 12, 134, 0.08);
+    border-radius: 4px;
+    padding: 0.2rem 0.75rem;
+    margin-bottom: 0.5rem;
+}
+
+.timeline-card h3 {
+    margin: 0.3rem 0 0.15rem;
+    font-size: 1.25rem;
+    color: #222;
+}
+
+.timeline-company {
+    margin: 0 0 0.25rem;
+    font-size: 1rem;
+    font-weight: 500;
     color: #530c86;
 }
 
-.experience-details p {
-    margin: 0.25rem 0;
-    font-size: 1.125rem;
-    color: #333;
+.timeline-team {
+    margin: 0 0 0.75rem;
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    color: #7a7385;
 }
 
-@media (max-width: 768px) {
-    .experience-item {
-        width: 100%;
+
+.timeline-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-top: auto;
+    padding-top: 0.85rem;
+}
+
+.tag {
+    font-size: 0.72rem;
+    font-weight: 500;
+    color: #530c86;
+    background: #f3e5f5;
+    border: 1px solid rgba(83, 12, 134, 0.18);
+    border-radius: 4px;
+    padding: 0.2rem 0.65rem;
+}
+
+/* Below this, two 1fr columns get too cramped for the cards' content —
+   stack both the rail and the cards into a single column instead of
+   forcing a horizontal scroll (which doesn't play well with the cards'
+   backdrop-filter blur). */
+@media (max-width: 760px) {
+    .timeline-track,
+    .timeline-rail {
+        grid-template-columns: 1fr;
+    }
+
+    .timeline-rail__line {
+        display: none;
+    }
+
+    .timeline-rail {
+        gap: 0.75rem;
     }
 }
+
+@media (max-width: 480px) {
+    .experience-section {
+        padding: 1.25rem;
+    }
+
+    .timeline-slider {
+        padding: 0 0.5rem;
+    }
+
+    .timeline-card {
+        padding: 1.1rem 1.1rem;
+    }
+
+    .timeline-rail__dot {
+        width: 32px;
+        height: 32px;
+        font-size: 0.8rem;
+    }
+
+    .timeline-rail__label {
+        font-size: 0.7rem;
+    }
+
+    .section-title {
+        font-size: 1.2rem;
+    }
+
+    .posts-panel__grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Slideshow: horizontally-sliding "screens" (timeline / linkedin post)
+   within the work section, switched via the arrow + dot controls rather
+   than being stacked in one long scroll. */
+.experience-slide-nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.25rem;
+    margin: 0.5rem 0 1.5rem;
+}
+
+.experience-slide-nav__dots {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.experience-slide-nav__dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(83, 12, 134, 0.2);
+    cursor: pointer;
+    padding: 0;
+    transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.experience-slide-nav__dot.is-active {
+    background: var(--purple);
+    transform: scale(1.3);
+}
+
+.experience-slides {
+    overflow: hidden;
+    width: 100%;
+}
+
+.experience-slides__track {
+    display: flex;
+    width: 100%;
+    transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.experience-slide {
+    flex: 0 0 100%;
+    width: 100%;
+    box-sizing: border-box;
+    min-width: 0;
+}
+
+/* Posts panel */
+.posts-panel {
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: left;
+}
+
+.posts-panel__subtitle {
+    font-size: 0.95rem;
+    color: #6b6470;
+    margin: 0 0 1.5rem;
+    text-align: center;
+}
+
+.posts-panel__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.25rem;
+}
+
+.post-card {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    background: rgba(255, 255, 255, 0.82);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    border-radius: 4px;
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    box-shadow: 0 10px 26px rgba(83, 12, 134, 0.1);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.post-card:hover {
+    z-index: 2;
+    transform: translateY(-3px);
+    box-shadow: 0 16px 34px rgba(83, 12, 134, 0.16);
+}
+
+.post-card__thumb {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100px;
+    background: linear-gradient(160deg, rgba(83, 12, 134, 0.1), rgba(83, 12, 134, 0.03));
+}
+
+.post-card__thumb img {
+    width: 44px;
+    height: 44px;
+    object-fit: contain;
+}
+
+.post-card__thumb-icon {
+    font-size: 1.8rem;
+    color: var(--purple);
+}
+
+.post-card__body {
+    padding: 1.1rem 1.25rem 1.25rem;
+}
+
+.post-card__meta {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-bottom: 0.6rem;
+}
+
+.post-card__tag {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    font-weight: 500;
+    color: var(--purple);
+    background: rgba(83, 12, 134, 0.1);
+    border-radius: 4px;
+    padding: 0.2rem 0.6rem;
+}
+
+.post-card__date {
+    font-size: 0.72rem;
+    color: #6b6470;
+}
+
+.post-card__open {
+    margin-left: auto;
+    font-size: 0.75rem;
+    color: #6b6470;
+}
+
+.post-card__title {
+    font-size: 0.98rem;
+    font-weight: 700;
+    color: var(--ink);
+    margin: 0 0 0.4rem;
+    line-height: 1.3;
+}
+
+.post-card__excerpt {
+    font-size: 0.82rem;
+    line-height: 1.5;
+    color: #6b6470;
+    margin: 0;
+}
+
+/* Dark mode */
+.experience-section[data-theme='dark'] {
+    background-color: #14121f;
+    color: #eae6f5;
+    transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+.experience-section[data-theme='dark'] .experience-grid {
+    background-image:
+        linear-gradient(rgba(168, 133, 255, 0.18) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(168, 133, 255, 0.18) 1px, transparent 1px);
+}
+
+.experience-section[data-theme='dark'] .particle {
+    background: #b48bff;
+}
+
+.experience-section[data-theme='dark'] .sparkle {
+    color: #b48bff;
+}
+
+.experience-section[data-theme='dark'] .section-title,
+.experience-section[data-theme='dark'] .timeline-card h3 {
+    color: #eae6f5;
+}
+
+.experience-section[data-theme='dark'] .section-rule {
+    background: rgba(180, 133, 255, 0.3);
+}
+
+.experience-section[data-theme='dark'] .timeline-rail__line {
+    background: linear-gradient(90deg, rgba(180, 133, 255, 0.15), rgba(180, 133, 255, 0.55), rgba(180, 133, 255, 0.15));
+}
+
+.experience-section[data-theme='dark'] .timeline-rail__dot {
+    background: #201c2e;
+    border-color: rgba(180, 133, 255, 0.35);
+    color: #b48bff;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+}
+
+.experience-section[data-theme='dark'] .timeline-rail__pulse {
+    border-color: #b48bff;
+}
+
+.experience-section[data-theme='dark'] .timeline-rail__label {
+    color: #eae6f5;
+}
+
+.experience-section[data-theme='dark'] .timeline-card {
+    background: rgba(32, 28, 46, 0.9);
+    border-color: rgba(180, 133, 255, 0.25);
+    box-shadow: 0 10px 34px rgba(0, 0, 0, 0.35);
+}
+
+.experience-section[data-theme='dark'] .timeline-card:hover {
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
+}
+
+.experience-section[data-theme='dark'] .timeline-logo {
+    background: linear-gradient(160deg, rgba(180, 133, 255, 0.18), rgba(180, 133, 255, 0.06));
+    border-color: rgba(180, 133, 255, 0.25);
+    color: #b48bff;
+}
+
+.experience-section[data-theme='dark'] .timeline-duration {
+    color: #b48bff;
+    background: rgba(180, 133, 255, 0.14);
+}
+
+.experience-section[data-theme='dark'] .timeline-company {
+    color: #b48bff;
+}
+
+.experience-section[data-theme='dark'] .timeline-team {
+    color: #a89fc0;
+}
+
+.experience-section[data-theme='dark'] .tag {
+    color: #b48bff;
+    background: rgba(180, 133, 255, 0.12);
+    border-color: rgba(180, 133, 255, 0.3);
+}
+
+.experience-section[data-theme='dark'] .experience-slide-nav__dot {
+    background: rgba(180, 133, 255, 0.25);
+}
+
+.experience-section[data-theme='dark'] .experience-slide-nav__dot.is-active {
+    background: #b48bff;
+}
+
+.experience-section[data-theme='dark'] .posts-panel__subtitle {
+    color: #a89fc0;
+}
+
+.experience-section[data-theme='dark'] .post-card {
+    background: rgba(32, 28, 46, 0.9);
+    border-color: rgba(180, 133, 255, 0.25);
+    box-shadow: 0 10px 26px rgba(0, 0, 0, 0.3);
+}
+
+.experience-section[data-theme='dark'] .post-card:hover {
+    box-shadow: 0 16px 34px rgba(0, 0, 0, 0.4);
+}
+
+.experience-section[data-theme='dark'] .post-card__thumb {
+    background: linear-gradient(160deg, rgba(180, 133, 255, 0.16), rgba(180, 133, 255, 0.04));
+}
+
+.experience-section[data-theme='dark'] .post-card__thumb-icon {
+    color: #b48bff;
+}
+
+.experience-section[data-theme='dark'] .post-card__tag {
+    color: #b48bff;
+    background: rgba(180, 133, 255, 0.14);
+}
+
+.experience-section[data-theme='dark'] .post-card__date,
+.experience-section[data-theme='dark'] .post-card__open {
+    color: #a89fc0;
+}
+
+.experience-section[data-theme='dark'] .post-card__title {
+    color: #eae6f5;
+}
+
+.experience-section[data-theme='dark'] .post-card__excerpt {
+    color: #a89fc0;
+}
+
+.experience-section[data-theme='dark'] .post-card__date,
+.experience-section[data-theme='dark'] .post-card__open {
+    color: #a89fc0;
+}
+
+.experience-section[data-theme='dark'] .post-card__title {
+    color: #eae6f5;
+}
+
+.experience-section[data-theme='dark'] .post-card__excerpt {
+    color: #a89fc0;
+}
+

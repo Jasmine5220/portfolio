@@ -1,52 +1,70 @@
-import React, { useEffect } from 'react';
+import React, { useRef } from 'react';
 import Skills from './Skills';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faLinkedin, faGithub } from '@fortawesome/free-brands-svg-icons';
-import { faCode } from '@fortawesome/free-solid-svg-icons';
 import './About.css';
-import AOS from 'aos';
-import 'aos/dist/aos.css';
 
-function About() {
-  useEffect(() => {
-    AOS.init({
-      duration: 1000,
-      once: false,
-    });
-  }, []);
+const PARTICLES = Array.from({ length: 14 }, (_, i) => i);
+const SPARKLES = [
+  { top: '14%', left: '10%', size: '1.2rem' },
+  { top: '22%', right: '14%', size: '1rem' },
+  { top: '58%', left: '6%', size: '1.3rem' },
+  { top: '72%', right: '8%', size: '1.1rem' },
+];
 
-  const milliseconds = new Date().getTime() - new Date('01/27/2003').getTime();
-  const age = Math.floor(milliseconds / 1000 / 60 / 60 / 24 / 365);
+function About({ isDark }) {
+  const sectionRef = useRef(null);
 
   return (
-    <section id="about" className="about-section">
+    <section
+      id="about"
+      className="about-section"
+      data-theme={isDark ? 'dark' : 'light'}
+      ref={sectionRef}
+    >
+      <div className="about-grid" aria-hidden="true" />
+      <div className="about-particles" aria-hidden="true">
+        {PARTICLES.map((i) => (
+          <span key={i} className="particle" style={{
+            left: `${(i * 37) % 100}%`,
+            animationDelay: `${(i % 9) * 0.9}s`,
+            animationDuration: `${8 + (i % 5) * 2}s`,
+          }} />
+        ))}
+        {SPARKLES.map((s, i) => (
+          <span
+            key={i}
+            className="sparkle"
+            style={{ top: s.top, left: s.left, right: s.right, fontSize: s.size, animationDelay: `${i * 0.7}s` }}
+          >
+            ✦
+          </span>
+        ))}
+      </div>
       <div className="about-skills">
-        <div className="about" data-aos="fade-right">
-          <h2>About</h2>
-          <p>
-            Hey there! 👋 I'm a {age}-year-old passionate coder with a knack for creating innovative solutions and bringing ideas to life. 💡 Learning Java, Python, React, Flask, and scikit-learn, I'm always up for a challenge and eager to dive into the world of technology. 🚀
+        <div className="about">
+          <h2 className="about-heading" data-aos="fade-up">
+            a little about <span className="about-heading__accent">me</span>
+          </h2>
+
+          <p className="about-lede" data-aos="fade-up" data-aos-delay="90">hey :)</p>
+          <p data-aos="fade-up" data-aos-delay="180">
+            CSE '26 @ IIITDM Jabalpur grad, now a software engineer intern @{' '}
+            <mark className="hl hl--amber">Mindtickle.</mark>
           </p>
-          <p>
-            When I'm not coding, you can catch me working on web dev projects, participating in hackathons, or exploring the latest tech trends. 🌐 I believe in the power of collaboration and am always looking for opportunities to learn and grow with like-minded enthusiasts. 🤝
+          <p data-aos="fade-up" data-aos-delay="270">
+            I like <mark className="hl hl--purple">building</mark> things, exploring new ideas,
+            and <mark className="hl hl--amber">learning</mark> along the way.
           </p>
-          <p>
-            Outside of tech, I love playing musical instruments 🎸 and hitting the table tennis court 🏓. These hobbies keep me balanced and inspired. ✨
+          <p data-aos="fade-up" data-aos-delay="360">
+            I've built a bunch of <mark className="hl hl--purple">projects,</mark> and still make
+            things just because I can.
           </p>
-          <div className="social-links">
-            <a href="https://www.linkedin.com/in/jasmine-jayaswal-3b3181251/" target="_blank" rel="noopener noreferrer">
-              <FontAwesomeIcon icon={faLinkedin} size="2x" />
-            </a>
-            <a href="https://github.com/Jasmine5220" target="_blank" rel="noopener noreferrer">
-              <FontAwesomeIcon icon={faGithub} size="2x" />
-            </a>
-            <a href="https://leetcode.com/u/sabmohmaayahai/" target="_blank" rel="noopener noreferrer">
-              <FontAwesomeIcon icon={faCode} size="2x" />
-            </a>
-          </div>
+          <p data-aos="fade-up" data-aos-delay="450">
+            Apart from that, talk to me about{' '}
+            <span className="squiggle">sports, music, new tech advances or literally anything interesting.</span>
+          </p>
         </div>
-        <div className="skills" data-aos="fade-left">
-          <h2 style={{ textAlign: 'center' }}>Skills</h2>
-          <Skills />
+        <div className="skills">
+          <Skills isDark={isDark} />
         </div>
       </div>
     </section>
@@ -54,4 +72,3 @@ function About() {
 }
 
 export default About;
-

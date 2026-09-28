@@ -1,0 +1,47 @@
+body.custom-cursor-active,
+body.custom-cursor-active * {
+    cursor: none !important;
+}
+
+.cursor-dot,
+.cursor-ring {
+    position: fixed;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    z-index: 9999;
+    will-change: transform;
+    transform: translate3d(-100px, -100px, 0);
+}
+
+.cursor-dot {
+    width: 6px;
+    height: 6px;
+    margin: -3px 0 0 -3px;
+    border-radius: 50%;
+    background: var(--purple, #530c86);
+}
+
+.cursor-ring {
+    width: 32px;
+    height: 32px;
+    margin: -16px 0 0 -16px;
+    border-radius: 50%;
+    border: 1.5px solid var(--purple, #530c86);
+    opacity: 0.6;
+    transition: width 0.2s ease, height 0.2s ease, margin 0.2s ease, opacity 0.2s ease;
+}
+
+.cursor-ring.is-hovering {
+    width: 52px;
+    height: 52px;
+    margin: -26px 0 0 -26px;
+    opacity: 0.9;
+}
+
+.cursor-ring.is-clicking {
+    width: 24px;
+    height: 24px;
+    margin: -12px 0 0 -12px;
+    opacity: 1;
+}

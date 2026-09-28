@@ -1,9 +1,25 @@
 body, html {
   margin: 0;
   padding: 0;
-  font-family: 'Arial', sans-serif;
+  font-family: var(--sans);
   scroll-behavior: smooth;
+  /* AOS's fade-left/fade-right entrance animations translate elements
+     past the viewport edge before they scroll into view; clip that
+     transient overflow so it never produces a page-wide scrollbar. */
+  overflow-x: hidden;
 }
+
+/* Section-to-section pagination is driven entirely by JS (see
+   scrollPagination.js's wheel/keydown handler). Native CSS scroll-snap is
+   intentionally NOT enabled here: it would additionally try to snap on the
+   same scroll motion the JS already animates, and the two fighting over
+   the same gesture is what caused a single scroll to overshoot by one
+   extra section.
+   No scroll-margin-top: the navbar is transparent, so leaving a gap above
+   each section (to "clear" the bar) just let the previous section's tail
+   show through that gap, looking like an incomplete scroll. Each section
+   already reserves its own top padding for the navbar via --navbar-height,
+   so sections can align flush with the viewport top instead. */
 
 
 .main {

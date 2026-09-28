@@ -1,0 +1,185 @@
+@keyframes loaderGridDrift {
+    from { background-position: 0 0, 0 0, 0 0; }
+    to { background-position: 48px 48px, 48px 48px, 0 0; }
+}
+
+@keyframes loaderGridPulse {
+    0%, 100% { opacity: 0.7; }
+    50% { opacity: 1; }
+}
+
+.loader-screen {
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #f3e5f5;
+    color: #14121a;
+    overflow: hidden;
+    transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.6s ease;
+}
+
+.loader-screen[data-theme='dark'] {
+    background-color: #14121f;
+    color: #ffffff;
+}
+
+.loader-screen.is-fading {
+    opacity: 0;
+    pointer-events: none;
+    visibility: hidden;
+}
+
+.loader-grid {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background-image:
+        linear-gradient(rgba(0, 0, 0, 0.12) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 0, 0, 0.12) 1px, transparent 1px);
+    background-size: 48px 48px, 48px 48px;
+    animation: loaderGridDrift 18s linear infinite, loaderGridPulse 5s ease-in-out infinite;
+    -webkit-mask-image: radial-gradient(circle at 50% 50%, rgba(0, 0, 0, 0.95), transparent 85%);
+    mask-image: radial-gradient(circle at 50% 50%, rgba(0, 0, 0, 0.95), transparent 85%);
+}
+
+.loader-screen[data-theme='dark'] .loader-grid {
+    background-image:
+        linear-gradient(rgba(255, 255, 255, 0.14) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.14) 1px, transparent 1px);
+}
+
+.loader-particles {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.loader-screen .particle {
+    background: #000000;
+}
+
+.loader-screen[data-theme='dark'] .particle {
+    background: #ffffff;
+}
+
+.loader-content {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 520px;
+    padding: 1.5rem;
+    box-sizing: border-box;
+}
+
+/* Adjust BuildingThings overrides inside Loader to keep it tightly centered & black/monochrome */
+.loader-screen .build-things {
+    padding: 0;
+    width: 100%;
+}
+
+.loader-screen .build-orbit {
+    margin: 0 auto 1.75rem;
+    width: 260px;
+    height: 260px;
+    transform: scale(1);
+}
+
+.loader-screen .build-orbit__ring {
+    stroke: rgba(0, 0, 0, 0.25);
+}
+
+.loader-screen[data-theme='dark'] .build-orbit__ring {
+    stroke: rgba(255, 255, 255, 0.3);
+}
+
+.loader-screen .build-orbit__ring-outer {
+    stroke: rgba(0, 0, 0, 0.12);
+}
+
+.loader-screen[data-theme='dark'] .build-orbit__ring-outer {
+    stroke: rgba(255, 255, 255, 0.18);
+}
+
+.loader-screen .build-pill-wrap {
+    display: none !important;
+}
+
+.loader-counter-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.85rem;
+    margin-top: 0.5rem;
+}
+
+.loader-number {
+    font-family: var(--pixel);
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: #000000;
+    letter-spacing: 0.08em;
+    font-variant-numeric: tabular-nums;
+}
+
+.loader-screen[data-theme='dark'] .loader-number {
+    color: #ffffff;
+}
+
+.loader-percent {
+    font-size: 1.3rem;
+    font-weight: 400;
+    margin-left: 0.25em;
+    opacity: 0.85;
+}
+
+.loader-bar-bg {
+    width: 240px;
+    height: 4px;
+    border-radius: 999px;
+    background: rgba(0, 0, 0, 0.12);
+    overflow: hidden;
+    position: relative;
+}
+
+.loader-screen[data-theme='dark'] .loader-bar-bg {
+    background: rgba(255, 255, 255, 0.18);
+}
+
+.loader-bar-fill {
+    height: 100%;
+    background: #000000;
+    border-radius: 999px;
+    transition: width 0.08s linear;
+}
+
+.loader-screen[data-theme='dark'] .loader-bar-fill {
+    background: #ffffff;
+}
+
+@media (max-width: 640px) {
+    .loader-content {
+        transform: scale(0.92);
+    }
+
+    .loader-screen .build-orbit {
+        margin-bottom: 2.25rem;
+    }
+
+    .loader-number {
+        font-size: 1.75rem;
+    }
+
+    .loader-bar-bg {
+        width: 190px;
+    }
+}

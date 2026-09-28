@@ -1,55 +1,466 @@
-/* Skills.css */
-.skills-container {
+@keyframes buildOrbitSpin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes buildPlanetFloat {
+  0%, 100% { transform: translate(-50%, -50%) translateY(0) rotate(-2deg); }
+  50% { transform: translate(-50%, -50%) translateY(-10px) rotate(2deg); }
+}
+
+@keyframes buildPlanetGlow {
+  0%, 100% { opacity: 0.45; transform: translate(-50%, -50%) scale(1); }
+  50% { opacity: 0.75; transform: translate(-50%, -50%) scale(1.12); }
+}
+
+@keyframes buildPlanetShine {
+  0% { transform: translate(-30%, -30%) rotate(0deg); }
+  100% { transform: translate(-30%, -30%) rotate(360deg); }
+}
+
+.build-things {
+  width: 100%;
+  padding: 2rem 0 0.5rem;
+  text-align: center;
+  overflow: visible;
+}
+
+.build-things__note {
+  display: inline-block;
+  max-width: 220px;
+  font-family: var(--sans);
+  font-style: italic;
+  font-weight: 500;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--ink);
+  background: #fdf8ea;
+  border: 1px solid rgba(83, 12, 134, 0.12);
+  border-radius: 4px;
+  padding: 0.6rem 1.1rem;
+  transform: rotate(-2deg);
+  box-shadow: 0 6px 14px rgba(83, 12, 134, 0.1);
+  margin-bottom: 2.5rem;
+}
+
+/* Planet + orbiting build-pills */
+.build-orbit {
+  position: relative;
+  width: 340px;
+  height: 340px;
+  margin: 0 auto 7rem;
+}
+
+.build-planet-float {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 62%;
+  height: 62%;
+  transform: translate(-50%, -50%);
+  animation: buildPlanetFloat 6s ease-in-out infinite;
+}
+
+.build-planet {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 30% 28%, rgba(255, 255, 255, 0.55), transparent 30%),
+    radial-gradient(circle at 32% 32%, #a885ff, #530c86 55%, #2b0646 85%);
+  border: 3px solid #fff;
+  box-shadow: 0 20px 50px rgba(83, 12, 134, 0.25), inset -14px -16px 30px rgba(20, 4, 40, 0.45), inset 6px 8px 16px rgba(255, 255, 255, 0.25);
+}
+
+.build-planet__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1);
+}
+
+.build-planet__highlight {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: radial-gradient(circle at 34% 30%, rgba(255, 255, 255, 0.5), transparent 45%);
+  pointer-events: none;
+}
+
+.build-planet__star {
+  position: absolute;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 0 4px rgba(255, 255, 255, 0.8);
+  animation: buildPlanetStarTwinkle 2.4s ease-in-out infinite;
+}
+
+.build-planet__star--1 {
+  top: 22%;
+  left: 60%;
+  width: 4px;
+  height: 4px;
+  animation-delay: 0s;
+}
+
+.build-planet__star--2 {
+  top: 55%;
+  left: 72%;
+  width: 3px;
+  height: 3px;
+  animation-delay: 0.6s;
+}
+
+.build-planet__star--3 {
+  top: 68%;
+  left: 38%;
+  width: 3px;
+  height: 3px;
+  animation-delay: 1.2s;
+}
+
+.build-planet__star--4 {
+  top: 40%;
+  left: 22%;
+  width: 2px;
+  height: 2px;
+  animation-delay: 1.8s;
+}
+
+@keyframes buildPlanetStarTwinkle {
+  0%, 100% { opacity: 0.35; transform: scale(0.85); }
+  50% { opacity: 1; transform: scale(1.2); }
+}
+
+.build-planet__glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 130%;
+  height: 130%;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle, rgba(168, 133, 255, 0.5), transparent 72%);
+  filter: blur(6px);
+  z-index: -1;
+  animation: buildPlanetGlow 5s ease-in-out infinite;
+}
+
+.build-orbit__ring {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  fill: none;
+  stroke: rgba(83, 12, 134, 0.22);
+  stroke-width: 1;
+  animation: buildOrbitSpin 60s linear infinite;
+}
+
+.build-orbit__ring-outer {
+  stroke: rgba(83, 12, 134, 0.14);
+}
+
+/* Each category is pinned exactly on the outer ring: the wrap is a
+   zero-size anchor (left/top set inline from pinOnRing()), the dot is
+   centered exactly on that point, and the content hangs off it toward
+   whichever side reads best — so the dot never drifts off the ring no
+   matter how wide the pill/caption end up being. */
+.build-pill-wrap {
+  position: absolute;
+  width: 0;
+  height: 0;
+  z-index: 1;
+}
+
+.build-pill-wrap__dot {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: translate(-50%, -50%);
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: rgba(120, 116, 128, 0.4);
+  z-index: 2;
+}
+
+.build-pill-wrap__content {
+  position: absolute;
+  top: 0;
   display: flex;
   flex-direction: column;
-  align-items: center; /* Center align the content */
-  padding: 2rem;
+  gap: 0.3rem;
 }
 
-.skills-category {
-  width: 100%; /* Ensure categories take full width */
-  margin-bottom: 0rem;
-  text-align: left; /* Center align the text */
+.build-pill-wrap--right .build-pill-wrap__content {
+  left: 10px;
+  transform: translateY(-50%);
+  align-items: flex-start;
 }
 
-.category-title {
-  display: flex;
+.build-pill-wrap--left .build-pill-wrap__content {
+  right: 10px;
+  transform: translateY(-50%);
+  align-items: flex-end;
+}
+
+.build-pill-wrap--thoughtful-interfaces .build-pill-wrap__content {
+  left: 32px;
+}
+
+.build-pill-wrap--useful-things .build-pill-wrap__content {
+  right: 32px;
+}
+
+.build-pill-wrap--bottom .build-pill-wrap__content {
+  top: 16px;
+  left: 0;
+  transform: translateX(-50%);
   align-items: center;
-  justify-content: center;
-  margin-bottom: 0rem;
 }
 
-.icon {
-  margin-right: 0.5rem; /* Space between icon and text */
+.build-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--sans);
+  font-size: 0.74rem;
+  font-weight: 500;
+  white-space: nowrap;
+  background: #fff;
+  border: 1px solid rgba(83, 12, 134, 0.18);
+  color: var(--ink);
+  border-radius: 4px;
+  padding: 0.42rem 0.8rem;
+  cursor: default;
+  box-shadow: 0 6px 16px rgba(83, 12, 134, 0.06);
 }
 
-.title {
-  font-size: 1.5rem;
-  color: #333;
+.build-pill.is-active {
+  border-color: rgba(83, 12, 134, 0.4);
+  color: var(--purple);
 }
 
-.skills-row {
+.build-pill__icon {
+  font-size: 0.8rem;
+  flex-shrink: 0;
+}
+
+.build-caption {
+  font-family: var(--sans);
+  font-style: italic;
+  font-size: 0.66rem;
+  color: var(--muted);
+  max-width: 118px;
+  line-height: 1.3;
+  white-space: normal;
+}
+
+.build-pill-wrap--left .build-caption {
+  text-align: right;
+}
+
+.build-pill-wrap--right .build-caption {
+  text-align: left;
+}
+
+.build-pill-wrap--bottom .build-caption {
+  text-align: center;
+}
+
+/* Tools row */
+.build-tools {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  width: 100%;
+}
+
+.build-tools__label {
+  display: block;
+  font-family: var(--mono);
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  color: var(--muted);
+  margin-bottom: 2rem;
+}
+
+.build-tools__categories {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2.5rem 3.5rem;
+  text-align: left;
+  max-width: 860px;
+  margin: 0 auto;
+}
+
+.build-tools__category {
   display: flex;
-  justify-content: center; /* Center align skill items */
-  flex-wrap: wrap; /* Wrap items to the next line if needed */
-  gap: 0.5rem;
-  margin-bottom:0.3rem;
+  flex-direction: column;
 }
 
-.skill-item {
-  padding: 0.5rem 1rem;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+.build-tools__category-label {
+  display: block;
+  font-family: var(--mono);
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  color: var(--purple);
+  margin-bottom: 0.6rem;
 }
 
-.proficient {
-  background-color: #e0ffe0;
+.build-tools__category-items {
+  margin: 0;
+  font-family: var(--mono);
+  font-size: 0.85rem;
+  line-height: 1.9;
+  color: var(--muted);
 }
 
-.intermediate {
-  background-color: #ffffe0;
+.build-tools__item {
+  display: inline-block;
+  color: var(--ink);
+  font-weight: 400;
+  transition: color 0.2s ease;
 }
 
-.beginner {
-  background-color: #ffe0e0;
+.build-tools[data-theme='dark'] .build-tools__item {
+  color: #dcd6eb;
+}
+
+.build-tools__item:hover {
+  color: var(--purple);
+}
+
+.build-tools[data-theme='dark'] .build-tools__item:hover {
+  color: #b48bff;
+}
+
+.build-tools__dot {
+  display: inline-block;
+  margin: 0 0.5em;
+  opacity: 0.35;
+  color: var(--muted);
+  user-select: none;
+}
+
+/* Dark mode: each root (.build-things / .build-tools) carries its own
+   data-theme, so these work regardless of which page section hosts them. */
+.build-things[data-theme='dark'] .build-things__note {
+  background: #201c2e;
+  color: #eae6f5;
+  border-color: rgba(168, 133, 255, 0.25);
+}
+
+.build-things[data-theme='dark'] .build-planet {
+  background: radial-gradient(circle at 32% 32%, rgba(180, 139, 255, 0.75), rgba(120, 60, 200, 0.45) 55%, transparent 78%);
+  border-color: #201c2e;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4), inset -8px -10px 24px rgba(20, 6, 40, 0.5);
+}
+
+.build-things[data-theme='dark'] .build-planet__glow {
+  background: radial-gradient(circle, rgba(180, 139, 255, 0.55), transparent 72%);
+}
+
+.build-things[data-theme='dark'] .build-orbit__ring {
+  stroke: rgba(180, 139, 255, 0.3);
+}
+
+.build-things[data-theme='dark'] .build-orbit__ring-outer {
+  stroke: rgba(180, 139, 255, 0.18);
+}
+
+.build-things[data-theme='dark'] .build-pill-wrap__dot {
+  background: rgba(200, 196, 210, 0.35);
+}
+
+.build-things[data-theme='dark'] .build-pill {
+  background: #201c2e;
+  color: #eae6f5;
+  border-color: rgba(180, 133, 255, 0.28);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+}
+
+.build-things[data-theme='dark'] .build-pill.is-active {
+  border-color: #b48bff;
+  color: #b48bff;
+}
+
+.build-things[data-theme='dark'] .build-caption {
+  color: #a89fc0;
+}
+
+.build-tools[data-theme='dark'] .build-tools__label {
+  color: #a89fc0;
+}
+
+.build-tools[data-theme='dark'] .build-tools__category-label {
+  color: #b48bff;
+}
+
+.build-tools[data-theme='dark'] .build-tools__category-items {
+  color: #a89fc0;
+}
+
+/* Between mobile and the row-layout breakpoint (About.css switches to
+   side-by-side columns at 860px), the orbit still rendered at its full
+   desktop size — regularly pushing the whole About section past 100vh,
+   and (once columns are only ~50% width) pushing pinned tags past the
+   column edge. Shrink the orbit and drop captions/pill size through this
+   range so everything stays inside its column and the section keeps
+   fitting one screen. */
+@media (max-width: 1023px) and (min-width: 641px) {
+  .build-orbit {
+    width: 190px;
+    height: 190px;
+    margin-bottom: 4.5rem;
+  }
+
+  .build-pill {
+    font-size: 0.62rem;
+    padding: 0.32rem 0.6rem;
+  }
+
+  .build-pill__icon {
+    font-size: 0.7rem;
+  }
+
+  .build-pill-wrap--right .build-pill-wrap__content,
+  .build-pill-wrap--thoughtful-interfaces .build-pill-wrap__content {
+    left: 6px;
+  }
+
+  .build-pill-wrap--left .build-pill-wrap__content,
+  .build-pill-wrap--useful-things .build-pill-wrap__content {
+    right: 6px;
+  }
+
+  .build-caption {
+    display: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .build-orbit {
+    width: 240px;
+    height: 240px;
+    margin-bottom: 3.5rem;
+  }
+
+  .build-pill {
+    font-size: 0.68rem;
+    padding: 0.38rem 0.7rem;
+  }
+
+  .build-caption {
+    display: none;
+  }
+
+  .build-tools__categories {
+    grid-template-columns: 1fr;
+    gap: 1.75rem;
+  }
 }
