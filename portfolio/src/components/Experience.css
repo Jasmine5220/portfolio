@@ -221,21 +221,16 @@
     background: rgba(255, 255, 255, 0.82);
     border: 1px solid rgba(255, 255, 255, 0.8);
     border-radius: 4px;
-    box-shadow: 0 10px 34px rgba(83, 12, 134, 0.14);
     padding: 1.5rem 1.75rem;
     width: 100%;
     height: 100%;
     box-sizing: border-box;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition: transform 0.3s ease;
 }
 
 .timeline-card:hover {
     z-index: 2;
-}
-
-.timeline-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 16px 40px rgba(83, 12, 134, 0.2);
 }
 
 .timeline-card__head {
@@ -324,17 +319,36 @@
    forcing a horizontal scroll (which doesn't play well with the cards'
    backdrop-filter blur). */
 @media (max-width: 760px) {
-    .timeline-track,
-    .timeline-rail {
-        grid-template-columns: 1fr;
+    /* Pair each rail node with its card instead of stacking all the
+       nodes above all the cards: both wrappers hand their children
+       straight to the slider's grid, and each pair shares a row via
+       the gridRow set inline per item, so the node sits to the left
+       of its matching card. */
+    .timeline-slider {
+        display: grid;
+        grid-template-columns: auto 1fr;
+        align-items: start;
+        gap: 1.5rem 1rem;
+    }
+
+    .timeline-rail,
+    .timeline-track {
+        display: contents;
     }
 
     .timeline-rail__line {
         display: none;
     }
 
-    .timeline-rail {
-        gap: 0.75rem;
+    .timeline-rail__node {
+        grid-column: 1;
+        grid-row: var(--row);
+        padding-top: 0.5rem;
+    }
+
+    .timeline-slide-item {
+        grid-column: 2;
+        grid-row: var(--row);
     }
 }
 
@@ -580,11 +594,6 @@
 .experience-section[data-theme='dark'] .timeline-card {
     background: rgba(32, 28, 46, 0.9);
     border-color: rgba(180, 133, 255, 0.25);
-    box-shadow: 0 10px 34px rgba(0, 0, 0, 0.35);
-}
-
-.experience-section[data-theme='dark'] .timeline-card:hover {
-    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
 }
 
 .experience-section[data-theme='dark'] .timeline-logo {

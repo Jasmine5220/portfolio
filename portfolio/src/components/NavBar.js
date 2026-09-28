@@ -59,7 +59,6 @@ const NavBar = ({ isDark, setIsDark }) => {
                 </button>
 
                 <nav className={`navbar-nav ${menuOpen ? 'is-open' : ''}`}>
-                    <span className="navbar-nav__caption">{'// navigate'}</span>
                     {NAV_ITEMS.map((item) => (
                         <button
                             key={item.key}

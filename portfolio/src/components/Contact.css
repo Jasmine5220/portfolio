@@ -215,7 +215,6 @@
 @media (max-width: 640px) {
   .contact-container {
     padding: calc(var(--navbar-height, 74px) + 2rem) 1.25rem 2.5rem;
-    padding-left: 3.5rem;
   }
 
   .contact-signoff {
@@ -244,10 +243,6 @@
 }
 
 @media (max-width: 400px) {
-  .contact-container {
-    padding-left: 2.5rem;
-  }
-
   .contact-signoff {
     font-size: 1.35rem;
   }

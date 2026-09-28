@@ -26,7 +26,6 @@ const experienceData = [
         meta: 'Team RevLMS',
         duration: 'Jan 2026 - Present',
         current: true,
-        tags: ['GraphQL', 'AWS Lambda', 'Kafka', 'gRPC', 'PostgreSQL', 'Redis', 'ReactJS', 'TypeScript'],
     },
     {
         role: 'SWE Intern',
@@ -35,7 +34,6 @@ const experienceData = [
         location: 'Hyderabad, India',
         meta: 'Team Azure BCDR-Resiliency',
         duration: 'May 2025 - July 2025',
-        tags: ['ReactJS', 'TypeScript', 'ARM APIs', 'ARG Queries'],
     },
 ];
 
@@ -92,13 +90,6 @@ const TimelineCard = ({ item }) => (
             {item.company}{item.location ? ` · ${item.location}` : ''}
         </p>
         {item.meta && <p className="timeline-team">{item.meta}</p>}
-        {item.tags.length > 0 && (
-            <div className="timeline-tags">
-                {item.tags.map((tag, i) => (
-                    <span className="tag" key={i}>{tag}</span>
-                ))}
-            </div>
-        )}
     </div>
 );
 
@@ -201,8 +192,12 @@ const Experience = ({ isDark }) => {
                         <div className="timeline-slider">
                             <div className="timeline-rail">
                                 <div className="timeline-rail__line" />
-                                {experienceData.map((item) => (
-                                    <div key={item.company} className="timeline-rail__node">
+                                {experienceData.map((item, i) => (
+                                    <div
+                                        key={item.company}
+                                        className="timeline-rail__node"
+                                        style={{ '--row': i + 1 }}
+                                    >
                                         <span className="timeline-rail__dot">
                                             <FontAwesomeIcon icon={faBriefcase} />
                                             {item.current && <span className="timeline-rail__pulse" />}
@@ -212,8 +207,12 @@ const Experience = ({ isDark }) => {
                                 ))}
                             </div>
                             <div className="timeline-track">
-                                {experienceData.map((item) => (
-                                    <div className="timeline-slide-item" key={item.company}>
+                                {experienceData.map((item, i) => (
+                                    <div
+                                        className="timeline-slide-item"
+                                        key={item.company}
+                                        style={{ '--row': i + 1 }}
+                                    >
                                         <TimelineCard item={item} />
                                     </div>
                                 ))}

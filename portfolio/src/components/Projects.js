@@ -68,8 +68,8 @@ const projectList = [
     {
         number: '10',
         title: 'Portfolio Design',
-        tagline: 'an earlier draft of this very site',
-        description: "An earlier exploration of this portfolio's visual design.",
+        tagline: 'a design portfolio, built for someone else',
+        description: 'A portfolio site designed and built for another creative professional.',
         github: 'https://github.com/Jasmine5220/portfolio-design',
     },
 ];
